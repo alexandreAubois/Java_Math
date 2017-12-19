@@ -79,4 +79,30 @@ public class FFTTest {
         }
     }
 
+    @Test
+    public void calculFFTImaginaireConstante(){
+        Complexe valeurCst[] = new Complexe[8];
+        Complexe i = new Complexe(0,1);
+        for (int indice=0 ; indice<valeurCst.length; indice++){
+            valeurCst[indice] = i;
+        }
+        FFT imaginaire = new FFT(3);
+        imaginaire.calculeFFTComplexe(valeurCst);
+        for (int indice=0; indice<valeurCst.length; indice++ ){
+            System.out.println("Valeur pour i :"+indice+"= "+imaginaire.getValeursN(indice));
+        }
+    }
+
+    @Test
+    public void calculFFTImaginaireExpo(){
+        Complexe valeurExp[] = new Complexe[8];
+        for (int indice=0 ; indice<valeurExp.length; indice++){
+            valeurExp[indice] = new Complexe((float) (Math.PI * 2 *indice/(valeurExp.length)));
+        }
+        FFT imaginaire = new FFT(3);
+        imaginaire.calculeFFTComplexe(valeurExp);
+        for (int indice=0; indice<valeurExp.length; indice++ ){
+            System.out.println("Valeur pour i : "+indice+" = "+imaginaire.getValeursN(indice));
+        }
+    }
 }

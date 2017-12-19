@@ -55,4 +55,36 @@ public class FFT {
         return valeurs[n];
     }
 
+    public void calculeFFTComplexe(Complexe entree[])
+    {
+        if(entree.length==1)
+        {
+            valeurs[0] = entree[0];
+        }else {
+
+            int taille = (int) (Math.log(entree.length) / Math.log(2)) - 1;
+            log.debug("nouvelle puissance de 2 du tableau :"+taille);
+            FFT paire = new FFT(taille);
+            FFT impaire = new FFT(taille);
+            Complexe elementPaire[] = new Complexe[(int) Math.pow(2,taille)];
+            Complexe elementImpaire[] = new Complexe[(int) Math.pow(2,taille)];
+            for (int i = 0; i < entree.length; i++) {
+                if (i % 2 == 0) {
+                    elementPaire[i / 2] = entree[i];
+                } else {
+                    elementImpaire[(i - 1) / 2] = entree[i];
+                }
+            }
+            paire.calculeFFTComplexe(elementPaire);
+            impaire.calculeFFTComplexe(elementImpaire);
+
+            for (int i = 0; i < entree.length / 2; i++) {
+                Complexe M = new Complexe((float) (2 * Math.PI * i / entree.length));
+                this.valeurs[i] = paire.getValeursN(i).add(impaire.getValeursN(i).multiply(M));
+                this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
+            }
+        }
+
+    }
+
 }

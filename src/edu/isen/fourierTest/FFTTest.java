@@ -1,5 +1,7 @@
-package edu.isen.fourier;
+package edu.isen.fourierTest;
 
+import edu.isen.fourier.Complexe;
+import edu.isen.fourier.FFT;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

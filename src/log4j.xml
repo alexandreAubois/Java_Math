@@ -8,8 +8,8 @@
         </layout>
     </appender>
     <!-- CATEGORIES -->
-    <category name="org.edu.ff.cours.logger">
-        <priority value="DEBUG"/>
+    <category name=".edu.isen.fourier.Complexe">
+        <level value="WARN"/>
     </category>
     <!-- ROOT -->
     <root>

@@ -8,7 +8,7 @@
         </layout>
     </appender>
     <!-- CATEGORIES -->
-    <category name=".edu.isen.fourier.Complexe">
+    <category name="edu.isen.fourier.Complexe">
         <level value="WARN"/>
     </category>
     <!-- ROOT -->

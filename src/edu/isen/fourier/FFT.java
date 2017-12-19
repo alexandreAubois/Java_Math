@@ -43,7 +43,7 @@ public class FFT {
             impaire.calculeFFTReelle(elementImpaire);
 
             for (int i = 0; i < entree.length / 2; i++) {
-                Complexe M = new Complexe((float) (2 * Math.PI * i / entree.length));
+                Complexe M = new Complexe((float) (-2 * Math.PI * i / entree.length));
                 this.valeurs[i] = paire.getValeursN(i).add(impaire.getValeursN(i).multiply(M));
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }
@@ -79,7 +79,7 @@ public class FFT {
             impaire.calculeFFTComplexe(elementImpaire);
 
             for (int i = 0; i < entree.length / 2; i++) {
-                Complexe M = new Complexe((float) (2 * Math.PI * i / entree.length));
+                Complexe M = new Complexe((float) (-2 * Math.PI * i / entree.length));
                 this.valeurs[i] = paire.getValeursN(i).add(impaire.getValeursN(i).multiply(M));
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }
@@ -87,4 +87,21 @@ public class FFT {
 
     }
 
+    public void inverseFFT(Complexe entree[])
+    {
+        for(int i=0;i<entree.length;i++)
+        {
+            entree[i]=entree[i].Conjugue();
+        }
+        this.calculeFFTComplexe(entree);
+        for(int i=0;i<this.valeurs.length;i++)
+        {
+            this.valeurs[i]=this.valeurs[i].Conjugue();
+            this.valeurs[i]=this.valeurs[i].multiply(new Complexe(1/(float)this.valeurs.length,0));
+        }
+    }
+
+    public Complexe[] getValeurs() {
+        return valeurs;
+    }
 }

@@ -19,7 +19,7 @@ public class Complexe {
     public Complexe(float re,float im) {
         Im = im;
         Re = re;
-        log.info("nouveaux complexe :"+this.toString());
+        log.info("nouveau complexe :"+this.toString());
     }
 
     /**
@@ -83,5 +83,14 @@ public class Complexe {
     @Override
     public int hashCode() {
         return Objects.hash(getIm(), getRe());
+    }
+
+    /**
+     *retourne le complexe conjugué
+     * @return le complexe conjugue
+     */
+    public Complexe Conjugue()
+    {
+        return new Complexe(this.getRe(),-this.getIm());
     }
 }

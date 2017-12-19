@@ -87,4 +87,21 @@ public class FFT {
 
     }
 
+    public void inverseFFT(Complexe entree[])
+    {
+        for(int i=0;i<entree.length;i++)
+        {
+            entree[i]=entree[i].Conjugue();
+        }
+        this.calculeFFTComplexe(entree);
+        for(int i=0;i<this.valeurs.length;i++)
+        {
+            this.valeurs[i]=this.valeurs[i].Conjugue();
+            this.valeurs[i]=this.valeurs[i].multiply(new Complexe(1/(float)this.valeurs.length,0));
+        }
+    }
+
+    public Complexe[] getValeurs() {
+        return valeurs;
+    }
 }

@@ -116,4 +116,22 @@ public class FFTTest {
             assertEquals(res[i][1], imaginaire.getValeursN(i).getIm(), Math.pow(10, -5));
         }
     }
+
+    @Test
+    public void iFFTconstant()
+    {
+        float valeurCst[]=new float[8];
+        for(int i=0;i<valeurCst.length;i++)
+        {
+            valeurCst[i]= 1;
+        }
+        FFT cst=new FFT(3);
+        cst.calculeFFTReelle(valeurCst);
+        FFT inverse=new FFT(3);
+        inverse.inverseFFT(cst.getValeurs());
+        for(int i=0;i<inverse.getValeurs().length;i++)
+        {
+            System.out.println(inverse.getValeursN(i));
+        }
+    }
 }

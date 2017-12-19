@@ -79,7 +79,7 @@ public class FFT {
             impaire.calculeFFTComplexe(elementImpaire);
 
             for (int i = 0; i < entree.length / 2; i++) {
-                Complexe M = new Complexe((float) (2 * Math.PI * i / entree.length));
+                Complexe M = new Complexe((float) (-2 * Math.PI * i / entree.length));
                 this.valeurs[i] = paire.getValeursN(i).add(impaire.getValeursN(i).multiply(M));
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }

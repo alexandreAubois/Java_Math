@@ -2,24 +2,23 @@ package edu.isen.fourier;
 
 import org.junit.Test;
 
-import java.sql.SQLOutput;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class FFTTest {
 
     @Test
     public void construct(){
         try {
-            FFT error=new FFT(-1);
+            new FFT(-1);
             fail("IllegalArgumentException expected");
         }catch (IllegalArgumentException e)
         {
             assertEquals(e.getMessage(),"size can't be inferior to zero");
         }
 
-        FFT zero=new FFT(0);
-        FFT positif=new FFT(15);
+        new FFT(0);
+        new FFT(15);
     }
 
     @Test
@@ -31,9 +30,11 @@ public class FFTTest {
         }
         FFT sinus=new FFT(3);
         sinus.calculeFFTReelle(valeurSinus);
+        float res[][]={{0,0},{0,-4},{0,0},{0,0},{0,0},{0,0},{0,0},{0,4}};
         for(int i=0;i<valeurSinus.length;i++)
         {
-            System.out.println("valeur pour i ="+i+" : "+sinus.getValeursN(i));
+            assertEquals(res[i][0],sinus.getValeursN(i).getRe(),Math.pow(10,-5));
+            assertEquals(res[i][1],sinus.getValeursN(i).getIm(),Math.pow(10,-5));
         }
     }
 
@@ -46,10 +47,13 @@ public class FFTTest {
         }
         FFT cst=new FFT(3);
         cst.calculeFFTReelle(valeurCst);
+        float res[][]={{8,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
         for(int i=0;i<valeurCst.length;i++)
         {
-            System.out.println("valeur pour i ="+i+" : "+cst.getValeursN(i));
+            assertEquals(res[i][0],cst.getValeursN(i).getRe(),Math.pow(10,-5));
+            assertEquals(res[i][1],cst.getValeursN(i).getIm(),Math.pow(10,-5));
         }
+
     }
 
     @Test
@@ -60,7 +64,8 @@ public class FFTTest {
         dirac.calculeFFTReelle(valeurDirac);
         for(int i=0;i<valeurDirac.length;i++)
         {
-            System.out.println("valeur pour i ="+i+" : "+dirac.getValeursN(i));
+            assertEquals(1,dirac.getValeursN(i).getRe(),Math.pow(10,-5));
+            assertEquals(0,dirac.getValeursN(i).getIm(),Math.pow(10,-5));
         }
     }
 
@@ -73,23 +78,25 @@ public class FFTTest {
         }
         FFT cosinus=new FFT(3);
         cosinus.calculeFFTReelle(valeurCosinus);
-        for(int i=0;i<valeurCosinus.length;i++)
-        {
-            System.out.println("valeur pour i ="+i+" : "+cosinus.getValeursN(i));
+        float res[][]={{0,0},{4,0},{0,0},{0,0},{0,0},{0,0},{0,0},{4,0}};
+        for(int i=0;i<valeurCosinus.length;i++) {
+            assertEquals(res[i][0], cosinus.getValeursN(i).getRe(), Math.pow(10, -5));
+            assertEquals(res[i][1], cosinus.getValeursN(i).getIm(), Math.pow(10, -5));
         }
     }
 
     @Test
     public void calculFFTImaginaireConstante(){
         Complexe valeurCst[] = new Complexe[8];
-        Complexe i = new Complexe(0,1);
         for (int indice=0 ; indice<valeurCst.length; indice++){
-            valeurCst[indice] = i;
+            valeurCst[indice] = new Complexe(0,1);;
         }
         FFT imaginaire = new FFT(3);
         imaginaire.calculeFFTComplexe(valeurCst);
-        for (int indice=0; indice<valeurCst.length; indice++ ){
-            System.out.println("Valeur pour i :"+indice+"= "+imaginaire.getValeursN(indice));
+        float res[][]={{0,8},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+        for (int i=0; i<valeurCst.length; i++ ){
+            assertEquals(res[i][0], imaginaire.getValeursN(i).getRe(), Math.pow(10, -5));
+            assertEquals(res[i][1], imaginaire.getValeursN(i).getIm(), Math.pow(10, -5));
         }
     }
 
@@ -101,8 +108,10 @@ public class FFTTest {
         }
         FFT imaginaire = new FFT(3);
         imaginaire.calculeFFTComplexe(valeurExp);
-        for (int indice=0; indice<valeurExp.length; indice++ ){
-            System.out.println("Valeur pour i : "+indice+" = "+imaginaire.getValeursN(indice));
+        float res[][]={{0,0},{8,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+        for (int i=0; i<valeurExp.length; i++ ){
+            assertEquals(res[i][0], imaginaire.getValeursN(i).getRe(), Math.pow(10, -5));
+            assertEquals(res[i][1], imaginaire.getValeursN(i).getIm(), Math.pow(10, -5));
         }
     }
 }

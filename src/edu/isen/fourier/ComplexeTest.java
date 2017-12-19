@@ -1,5 +1,7 @@
 package edu.isen.fourier;
 
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class ComplexeTest {
@@ -84,6 +86,12 @@ public class ComplexeTest {
         assertEquals(id.multiply(a),a);
     }
 
+    @Test
+    public void constructArg(){
+        Complexe a=new Complexe((float) (Math.PI/2));
+        assertEquals(a.getRe(),0,Math.pow(10,-7));
+        assertEquals(a.getIm(),1,Math.pow(10,-7));
+    }
 
     @org.junit.Test
     public void equals() {

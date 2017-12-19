@@ -3,6 +3,7 @@ package edu.isen.fourier;
 
 import org.apache.log4j.Logger;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 public class Complexe {
 
@@ -65,7 +66,9 @@ public class Complexe {
 
     @Override
     public String toString() {
-        return Re+" + "+Im+" i";
+        DecimalFormat df=new DecimalFormat();
+        df.setMaximumFractionDigits(3);
+        return df.format(Re)+" + "+df.format(Im)+" i";
     }
 
     @Override

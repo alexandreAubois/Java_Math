@@ -33,6 +33,17 @@ public class Complexe {
         Re= (float) Math.cos(arg);
         Im= (float) Math.sin(arg);
     }
+
+    public Complexe(String nb)
+    {
+        //String delimiteur ="[]++[]+i+i";
+        //String delimiteur ="[ ]* + [ ]* i";
+        String delimiteur ="[ ]+[+][ ]+[i] ";
+        String token[]=nb.split(delimiteur);
+        this.Re=Float.parseFloat(token[0]);
+        this.Im=Float.parseFloat(token[1]);
+
+    }
     public float getIm() {
         return Im;
     }
@@ -68,7 +79,7 @@ public class Complexe {
     public String toString() {
         DecimalFormat df=new DecimalFormat();
         df.setMaximumFractionDigits(3);
-        return df.format(Re)+" + "+df.format(Im)+" i";
+        return df.format(Re)+" + i "+df.format(Im);
     }
 
     @Override

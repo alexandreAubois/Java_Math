@@ -112,4 +112,9 @@ public class Complexe {
     {
         return new Complexe(this.getRe(),-this.getIm());
     }
+
+    public float getModule()
+    {
+        return (float) Math.sqrt(this.Re*this.Re+this.Im*this.Im);
+    }
 }

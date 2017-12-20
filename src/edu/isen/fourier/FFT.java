@@ -2,7 +2,9 @@ package edu.isen.fourier;
 
 import org.apache.log4j.Logger;
 
-public class FFT {
+import java.util.Observable;
+
+public class FFT extends Observable{
 
     private Complexe valeurs[];
     private static final Logger log= Logger.getLogger(Complexe.class);
@@ -17,6 +19,19 @@ public class FFT {
             valeurs=new Complexe[(int) Math.pow(2,size)];
             log.info("creation d'un tableau de taille "+valeurs.length);
         }
+    }
+
+    public void setSize(int size) throws IllegalArgumentException
+    {
+        if(Integer.bitCount(size)!=1)
+        {
+            log.warn("mauvaise taille de tableau pour la FFT");
+            throw new IllegalArgumentException("size can't be inferior to zero");
+        }else {
+            valeurs=new Complexe[size];
+            log.info("creation d'un tableau de taille "+valeurs.length);
+        }
+
     }
 
     public void calculeFFTReelle(float entree[])
@@ -48,7 +63,7 @@ public class FFT {
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }
         }
-
+        this.notifyObservers();
     }
 
     public Complexe getValeursN(int n) {
@@ -84,7 +99,7 @@ public class FFT {
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }
         }
-
+        this.notifyObservers(this.valeurs);
     }
 
     public void inverseFFT(Complexe entree[])
@@ -99,9 +114,16 @@ public class FFT {
             this.valeurs[i]=this.valeurs[i].Conjugue();
             this.valeurs[i]=this.valeurs[i].multiply(new Complexe(1/(float)this.valeurs.length,0));
         }
+        this.notifyObservers(this.valeurs);
     }
 
     public Complexe[] getValeurs() {
         return valeurs;
+    }
+
+    @Override
+    public void notifyObservers() {
+        setChanged(); // Set the changed flag to true, otherwise observers won't be notified.
+        super.notifyObservers();
     }
 }

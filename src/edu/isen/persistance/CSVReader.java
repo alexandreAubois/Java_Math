@@ -44,7 +44,7 @@ public class CSVReader{
         return res;
     }
 
-    public static Float[] parseReelCSV(String nom) throws IllegalArgumentException,FileNotFoundException
+    public static float[] parseReelCSV(String nom) throws IllegalArgumentException,FileNotFoundException
     {
         BufferedReader br;
         String ch;
@@ -63,10 +63,10 @@ public class CSVReader{
 
 
         //todo verifié taille OK
-        Float res[];
+        float res[];
         if(Integer.bitCount(ListFloat.size())==1)
         {
-            res = new Float[ListFloat.size()];
+            res = new float[ListFloat.size()];
             for (int i = 0; i < ListFloat.size(); i++) {
                 res[i]=ListFloat.get(i);
             }

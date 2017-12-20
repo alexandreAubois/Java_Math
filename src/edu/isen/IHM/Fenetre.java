@@ -1,28 +1,29 @@
 package edu.isen.IHM;
 
-import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFileChooser;
 import java.io.File;
 
 
 public class Fenetre extends JFrame{
 
-    private JCheckBox FFTR = new JCheckBox("FFT Réel");
-    private JCheckBox FFTC = new JCheckBox("FFT Complexe");
-    private JCheckBox iFFT = new JCheckBox("iFFT");
-    private JPanel container = new JPanel();
+    private ButtonGroup monGroupe = new ButtonGroup();
+    private JRadioButton FFTR = new JRadioButton("FFT Réel");
+    private JRadioButton FFTC = new JRadioButton("FFT Complexe");
+    private JRadioButton iFFT = new JRadioButton("iFFT");
+
+    //private JPanel container = new JPanel();
+
+    JButton Pan1 = new JButton("Lancer");
+    JButton Pan2 = new JButton("Ouvrir");
 
 
-
+    JFileChooser chooser = new JFileChooser();
 
     public Fenetre(){
 
@@ -32,28 +33,23 @@ public class Fenetre extends JFrame{
         this.setLocationRelativeTo(null);
 
         //Bouton "Lancer"
-        JPanel Pan1 = new JPanel();
-
-        Pan1.setLayout(new BoxLayout(Pan1, BoxLayout.LINE_AXIS));
-        Pan1.add(new JButton("Lancer"));
+        Pan1.addActionListener(new StartListener());
 
         //Bouton "ouvrir
-        JPanel Pan2 = new JPanel();
-
-        Pan2.setLayout(new BoxLayout(Pan2, BoxLayout.LINE_AXIS));
-        Pan2.add(new JButton("Ouvrir"));
-
-
+        Pan2.addActionListener(new OpenListener());
 
         //CheckBox
         JPanel top = new JPanel();
-        FFTR.addActionListener(new StateListener());
-        FFTC.addActionListener(new StateListener());
-        iFFT.addActionListener(new StateListener());
+        monGroupe.add(FFTR);
+        FFTR.addActionListener(new CheckBoxListener());
+        monGroupe.add(FFTC);
+        FFTC.addActionListener(new CheckBoxListener());
+        monGroupe.add(iFFT);
+        iFFT.addActionListener(new CheckBoxListener());
         top.add(FFTR);
         top.add(FFTC);
         top.add(iFFT);
-        container.add(top, BorderLayout.NORTH);
+        //container.add(top, BorderLayout.NORTH);
 
         JPanel PanF = new JPanel();
         PanF.setLayout(new BoxLayout(PanF, BoxLayout.PAGE_AXIS));
@@ -69,12 +65,42 @@ public class Fenetre extends JFrame{
         Fenetre fen = new Fenetre();
     }
 
-    class StateListener implements ActionListener {
+    class CheckBoxListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println("source : " + ((JCheckBox) e.getSource()).getText() + " - état : " + ((JCheckBox) e.getSource()).isSelected());
+            System.out.println("source : " + ((JRadioButton) e.getSource()).getText() + " - état : " + ((JRadioButton) e.getSource()).isSelected());
 
         }
+    }
+    class StartListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Start");
+
+        }
+    }
+    class OpenListener extends Component implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Open");
+
+            JFileChooser choix = new JFileChooser();
+            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
+            choix.addChoosableFileFilter(myFile);
+            choix.setAcceptAllFileFilterUsed(false);
+            int retour = choix.showOpenDialog(this);
+            if(retour == JFileChooser.APPROVE_OPTION){
+                String chemin =choix.getSelectedFile().getAbsolutePath();
+                Fenetre.load(chemin);
+            }
+
+        }
+    }
+
+    public static void load(String chemin){
+
     }
 }

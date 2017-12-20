@@ -134,4 +134,24 @@ public class FFTTest {
             System.out.println(inverse.getValeursN(i));
         }
     }
+
+    @Test public void IFFtnbAlea()
+    {
+        float val[]= new float[8];
+        for (int i = 0; i <val.length ; i++) {
+            val[i]=i;
+        }
+        FFT cst=new FFT(3);
+        cst.calculeFFTReelle(val);
+
+
+        FFT inverse=new FFT(3);
+        inverse.inverseFFT(cst.getValeurs());
+        for(int i=0;i<inverse.getValeurs().length;i++)
+        {
+            System.out.println(inverse.getValeursN(i));
+        }
+
+
+    }
 }

@@ -34,14 +34,18 @@ public class Complexe {
         Im= (float) Math.sin(arg);
     }
 
-    public Complexe(String nb)
+    public Complexe(String nb) throws IllegalArgumentException
     {
-        //String delimiteur ="[]++[]+i+i";
-        //String delimiteur ="[ ]* + [ ]* i";
         String delimiteur ="[ ]+[+][ ]+[i] ";
         String token[]=nb.split(delimiteur);
-        this.Re=Float.parseFloat(token[0]);
-        this.Im=Float.parseFloat(token[1]);
+        try {
+
+            this.Re=Float.parseFloat(token[0]);
+            this.Im=Float.parseFloat(token[1]);
+        }catch (ArrayIndexOutOfBoundsException|NumberFormatException e)
+        {
+            throw new IllegalArgumentException("mauvais format de la donnée");
+        }
 
     }
     public float getIm() {

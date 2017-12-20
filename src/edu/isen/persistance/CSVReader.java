@@ -1,44 +1,79 @@
 package edu.isen.persistance;
 
 import edu.isen.fourier.Complexe;
+import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 
-public class CSVReader {
+public class CSVReader{
 
-    public static Complexe[] parseComplexeCSV(String nom)
+    private static final Logger log= Logger.getLogger(CSVReader.class);
+
+    public static Complexe[] parseComplexeCSV(String nom) throws IllegalArgumentException,FileNotFoundException
     {
         BufferedReader br;
-        String split=",";
-        int ch;
-        StringBuilder chaine= new StringBuilder();
-        List<Complexe> ListComplexe=new ArrayList<Complexe>();
+        String ch;
+        String tab[];
+        List<Complexe> ListComplexe= new ArrayList<>();
+        br=new BufferedReader(new FileReader(nom));
         try {
-            br=new BufferedReader(new FileReader(nom));
-            while ((ch=br.read())!=null)
+            while ((ch = br.readLine()) != null)
             {
-                if(ch==',')
-                {
-                    ListComplexe.add(new Complexe(chaine.toString()));
-                    chaine =new StringBuilder();
-                }else {
-                    chaine.append(ch);
-                }
-
-
+                tab=ch.split(",");
+               ListComplexe.add(new Complexe(tab[0]));
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        //todo verifié taille OK
 
-        if(ListComplexe.size())
-        for (int i = 0; i < ListComplexe.size(); i++) {
-            
+        
+        Complexe res[];
+        if(Integer.bitCount(ListComplexe.size())==1)
+        {
+             res = new Complexe[ListComplexe.size()];
+            for (int i = 0; i < ListComplexe.size(); i++) {
+                res[i]=ListComplexe.get(i);
+            }
+        }else {
+            throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
         }
+
+        return res;
+    }
+
+    public static Float[] parseReelCSV(String nom) throws IllegalArgumentException,FileNotFoundException
+    {
+        BufferedReader br;
+        String ch;
+        String tab[];
+        List<Float> ListFloat= new ArrayList<>();
+        br=new BufferedReader(new FileReader(nom));
+        try {
+            while ((ch = br.readLine()) != null)
+            {
+                tab=ch.split(",");
+                ListFloat.add(Float.parseFloat(tab[0]));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //todo verifié taille OK
+        Float res[];
+        if(Integer.bitCount(ListFloat.size())==1)
+        {
+            res = new Float[ListFloat.size()];
+            for (int i = 0; i < ListFloat.size(); i++) {
+                res[i]=ListFloat.get(i);
+            }
+        }else {
+            throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
+        }
+
+        return res;
     }
 }

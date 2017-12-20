@@ -65,6 +65,9 @@ public class Fenetre extends JFrame{
         Fenetre fen = new Fenetre();
     }
 
+    /**
+     * ActionListener pour la checkBox pour choisir le type de la transformer
+     */
     class CheckBoxListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -73,6 +76,10 @@ public class Fenetre extends JFrame{
 
         }
     }
+
+    /**
+     * ActionListener pour le bouton start qui permet de lancer le programme
+     */
     class StartListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -81,6 +88,10 @@ public class Fenetre extends JFrame{
 
         }
     }
+
+    /**
+     * ActionListener pour le bouton open qui permet d'importer un fichier csv
+     */
     class OpenListener extends Component implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {

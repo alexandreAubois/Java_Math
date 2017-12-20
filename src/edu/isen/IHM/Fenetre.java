@@ -101,6 +101,6 @@ public class Fenetre extends JFrame{
     }
 
     public static void load(String chemin){
-
+        //todo
     }
 }

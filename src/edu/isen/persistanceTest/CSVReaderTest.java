@@ -13,7 +13,7 @@ public class CSVReaderTest {
     @Test
     public void parseComplexeCSV() {
         try {
-           Complexe a[]= CSVReader.parseComplexeCSV("CSV/out.csv");
+            CSVReader.parseComplexeCSV("CSV/out.csv");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             fail("fichier pas trouve");
@@ -37,6 +37,7 @@ public class CSVReaderTest {
             CSVReader.parseReelCSV("CSV/error.csv");
             fail("IllegalArgumentException");
         } catch (FileNotFoundException|IllegalArgumentException e) {
+            assertTrue(true);
         }
     }
 }

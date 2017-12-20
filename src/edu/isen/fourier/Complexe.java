@@ -4,6 +4,7 @@ package edu.isen.fourier;
 import org.apache.log4j.Logger;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 public class Complexe {
 
@@ -44,7 +45,7 @@ public class Complexe {
             this.Im=Float.parseFloat(token[1]);
         }catch (ArrayIndexOutOfBoundsException|NumberFormatException e)
         {
-            throw new IllegalArgumentException("mauvais format de la donnée");
+            throw new IllegalArgumentException("mauvais format de la donnée"+e);
         }
 
     }
@@ -83,6 +84,9 @@ public class Complexe {
     public String toString() {
         DecimalFormat df=new DecimalFormat();
         df.setMaximumFractionDigits(3);
+        DecimalFormatSymbols dfs=new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
         return df.format(Re)+" + i "+df.format(Im);
     }
 

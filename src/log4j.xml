@@ -12,7 +12,7 @@
         <level value="DEBUG"/>
     </category>
     <category name="edu.isen.fourier.Complexe">
-        <level value="DEBUG"/>
+        <level value="WARN"/>
     </category>
     <!-- ROOT -->
     <root>

@@ -143,7 +143,10 @@ public class FFTTest {
         }
         FFT cst=new FFT(3);
         cst.calculeFFTReelle(val);
-
+        for(int i=0;i<cst.getValeurs().length;i++)
+        {
+            System.out.println(cst.getValeursN(i));
+        }
 
         FFT inverse=new FFT(3);
         inverse.inverseFFT(cst.getValeurs());

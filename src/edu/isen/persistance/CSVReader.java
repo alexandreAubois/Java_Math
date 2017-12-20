@@ -29,7 +29,7 @@ public class CSVReader{
             e.printStackTrace();
         }
 
-        
+
         Complexe res[];
         if(Integer.bitCount(ListComplexe.size())==1)
         {

@@ -12,5 +12,6 @@ public class Main {
         Fenetre fen = new Fenetre(controller);
         ff.addObserver(fen);
         controller.setFft(ff);
+        controller.setFen(fen);
     }
 }

@@ -99,7 +99,7 @@ public class FFT extends Observable{
                 this.valeurs[i + entree.length / 2] = paire.getValeursN(i).sub(impaire.getValeursN(i).multiply(M));
             }
         }
-        this.notifyObservers(this.valeurs);
+        this.notifyObservers();
     }
 
     public void inverseFFT(Complexe entree[])
@@ -114,7 +114,7 @@ public class FFT extends Observable{
             this.valeurs[i]=this.valeurs[i].Conjugue();
             this.valeurs[i]=this.valeurs[i].multiply(new Complexe(1/(float)this.valeurs.length,0));
         }
-        this.notifyObservers(this.valeurs);
+        this.notifyObservers();
     }
 
     public Complexe[] getValeurs() {

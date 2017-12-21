@@ -1,5 +1,6 @@
 package edu.isen.controller;
 
+import edu.isen.IHM.Fenetre;
 import edu.isen.fourier.Complexe;
 import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
@@ -14,6 +15,16 @@ public class Controller {
     }
 
     private FFT fft;
+
+    public Fenetre getFen() {
+        return fen;
+    }
+
+    public void setFen(Fenetre fen) {
+        this.fen = fen;
+    }
+
+    private Fenetre fen;
 
     public Controller(FFT model){
         this.fft=model;
@@ -43,8 +54,8 @@ public class Controller {
                 default:
                     break;
             }
-        }catch (FileNotFoundException|NullPointerException e) {
-            e.printStackTrace();
+        }catch (FileNotFoundException|NullPointerException|IllegalArgumentException e) {
+            fen.createPopUp(e.toString());
         }
     }
 

@@ -30,7 +30,7 @@ public class Fenetre extends JFrame implements Observer{
     private JFreeChart jc;
     private Controller controller;
     private ChartPanel cp;
-
+    private JFrame message = new JFrame("Message d'erreur");
     //private JPanel container = new JPanel();
 
     JButton Pan1 = new JButton("Lancer");
@@ -68,6 +68,7 @@ public class Fenetre extends JFrame implements Observer{
             if(retour == JFileChooser.APPROVE_OPTION){
                 this.nomFichier= choix.getSelectedFile().getAbsolutePath();
             }
+            //this.createPopUp("hello");
         });
 
         //CheckBox
@@ -122,10 +123,14 @@ public class Fenetre extends JFrame implements Observer{
             JFreeChart chart = ChartFactory.createXYLineChart(
                     "Goals Scored Over Time", "N", "Magnitude",
                     xyDataset, PlotOrientation.VERTICAL, true, false, false);
-            chart.
+
 
             this.cp.setChart(chart);
         }
 
+    }
+    public void createPopUp(String message_error){
+        log.info("ici");
+        JOptionPane.showMessageDialog(message, message_error);
     }
 }

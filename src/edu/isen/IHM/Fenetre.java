@@ -122,8 +122,6 @@ public class Fenetre extends JFrame implements Observer{
             JFreeChart chart = ChartFactory.createXYLineChart(
                     "Goals Scored Over Time", "N", "Magnitude",
                     xyDataset, PlotOrientation.VERTICAL, true, false, false);
-            chart.
-
             this.cp.setChart(chart);
         }
 

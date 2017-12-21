@@ -3,17 +3,19 @@ package edu.isen.controller;
 import edu.isen.fourier.Complexe;
 import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
+import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;
 
 public class Controller {
 
+    private static final Logger log= Logger.getLogger(Complexe.class);
+    private FFT fft;
+
     public void setFft(FFT fft) {
         this.fft = fft;
         System.out.println(fft);
     }
-
-    private FFT fft;
 
     public Controller(FFT model){
         this.fft=model;
@@ -41,6 +43,7 @@ public class Controller {
                     this.fft.inverseFFT(valC);
                     break;
                 default:
+                    log.warn("Choix d'action invalide");
                     break;
             }
         }catch (FileNotFoundException|NullPointerException e) {

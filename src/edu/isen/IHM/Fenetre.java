@@ -22,26 +22,12 @@ import java.util.Observer;
 public class Fenetre extends JFrame implements Observer{
 
     private static final Logger log= Logger.getLogger(Fenetre.class);
-    private ButtonGroup monGroupe = new ButtonGroup();
-    private JRadioButton FFTR = new JRadioButton("FFT Réel");
-    private JRadioButton FFTC = new JRadioButton("FFT Complexe");
-    private JRadioButton iFFT = new JRadioButton("iFFT");
-    private JPanel PanF = new JPanel();
-    private JFreeChart jc;
     private Controller controller;
     private ChartPanel cp;
     private JFrame message = new JFrame("Message d'erreur");
     //private JPanel container = new JPanel();
 
-    JButton Pan1 = new JButton("Lancer");
-    JButton Pan2 = new JButton("Ouvrir");
-    JButton saveAs= new JButton("Sauvegarder sous");
-
-
-    JFileChooser chooser = new JFileChooser();
-
     private String nomFichier;
-    private String nomFichierSauvegarde;
     private int choixActuel;
 
 
@@ -55,13 +41,15 @@ public class Fenetre extends JFrame implements Observer{
         choixActuel=0;
 
         //Bouton "Lancer"
-        Pan1.addActionListener(e -> {
+        JButton pan1 = new JButton("Lancer");
+        pan1.addActionListener(e -> {
             log.info("Action à effectuer Fichier courant : "+this.nomFichier+"Choix actuel "+this.choixActuel);
             this.controller.notifyAction(this.nomFichier,this.choixActuel);
         });
 
         //Bouton "ouvrir
-        Pan2.addActionListener(e -> {
+        JButton pan2 = new JButton("Ouvrir");
+        pan2.addActionListener(e -> {
             JFileChooser choix = new JFileChooser();
             FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
             choix.addChoosableFileFilter(myFile);
@@ -73,6 +61,7 @@ public class Fenetre extends JFrame implements Observer{
             }
             //this.createPopUp("hello");
         });
+        JButton saveAs = new JButton("Sauvegarder sous");
         saveAs.addActionListener(e ->{
             JFileChooser choix = new JFileChooser();
             FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
@@ -86,11 +75,15 @@ public class Fenetre extends JFrame implements Observer{
         });
         //CheckBox
         JPanel top = new JPanel();
+        ButtonGroup monGroupe = new ButtonGroup();
+        JRadioButton FFTR = new JRadioButton("FFT Réel");
         monGroupe.add(FFTR);
         FFTR.addActionListener(e -> this.choixActuel=0);
         FFTR.setSelected(true);
+        JRadioButton FFTC = new JRadioButton("FFT Complexe");
         monGroupe.add(FFTC);
         FFTC.addActionListener(e -> this.choixActuel=1);
+        JRadioButton iFFT = new JRadioButton("iFFT");
         monGroupe.add(iFFT);
         iFFT.addActionListener(e -> this.choixActuel=2);
         top.add(FFTR);
@@ -98,11 +91,12 @@ public class Fenetre extends JFrame implements Observer{
         top.add(iFFT);
         //container.add(top, BorderLayout.NORTH);
 
-        PanF.setLayout(new BoxLayout(PanF, BoxLayout.PAGE_AXIS));
+        JPanel panF = new JPanel();
+        panF.setLayout(new BoxLayout(panF, BoxLayout.PAGE_AXIS));
 
-        PanF.add(Pan2);
-        PanF.add(top);
-        PanF.add(Pan1);
+        panF.add(pan2);
+        panF.add(top);
+        panF.add(pan1);
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Analyse Spectrale", "N", "Magnitude",
                 null, PlotOrientation.VERTICAL, true, true,false);
@@ -114,12 +108,12 @@ public class Fenetre extends JFrame implements Observer{
             }
         };
         cp.setMouseWheelEnabled(true);
-        PanF.add(cp);
-        PanF.add(saveAs);
+        panF.add(cp);
+        panF.add(saveAs);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
 
-        this.getContentPane().add(PanF);
+        this.getContentPane().add(panF);
         this.setSize(new Dimension(400,400));
         this.setVisible(true);
     }

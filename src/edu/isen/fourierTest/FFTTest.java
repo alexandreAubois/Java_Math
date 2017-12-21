@@ -91,7 +91,7 @@ public class FFTTest {
     public void calculFFTImaginaireConstante(){
         Complexe valeurCst[] = new Complexe[8];
         for (int indice=0 ; indice<valeurCst.length; indice++){
-            valeurCst[indice] = new Complexe(0,1);;
+            valeurCst[indice] = new Complexe(0,1);
         }
         FFT imaginaire = new FFT(3);
         imaginaire.calculeFFTComplexe(valeurCst);

@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 
 public class CSVReader{
@@ -38,6 +37,7 @@ public class CSVReader{
                 res[i]=ListComplexe.get(i);
             }
         }else {
+            log.warn("La taille n'est pas une puissance de 2 : "+ListComplexe.size());
             throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
         }
 
@@ -61,8 +61,6 @@ public class CSVReader{
             e.printStackTrace();
         }
 
-
-        //todo verifié taille OK
         float res[];
         if(Integer.bitCount(ListFloat.size())==1)
         {
@@ -71,6 +69,7 @@ public class CSVReader{
                 res[i]=ListFloat.get(i);
             }
         }else {
+            log.warn("La taille n'est pas une puissance de 2 :"+ListFloat.size());
             throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
         }
 

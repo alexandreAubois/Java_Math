@@ -4,8 +4,6 @@ import edu.isen.fourier.Complexe;
 import edu.isen.persistance.CSVWriter;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class CSVWriterTest {
 
     @Test

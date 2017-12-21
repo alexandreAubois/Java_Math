@@ -102,7 +102,7 @@ public class ComplexeTest {
         assertEquals(4,a.getIm(),Math.pow(10,-5));
 
         try{
-            a=new Complexe("14 + i j4");
+            new Complexe("14 + i j4");
             fail("NumberFormatExecption expected");
         }catch (NumberFormatException ignored){
 

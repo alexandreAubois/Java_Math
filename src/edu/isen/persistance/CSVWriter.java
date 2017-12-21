@@ -14,9 +14,8 @@ public class CSVWriter {
 
         try {
             FileWriter fw=new FileWriter(f);
-            for(int i=0;i<tab.length;i++)
-            {
-                fw.write(tab[i].toString());
+            for (Complexe aTab : tab) {
+                fw.write(aTab.toString());
                 fw.write(",");
                 fw.write(System.getProperty("line.separator"));
             }

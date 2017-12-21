@@ -6,7 +6,6 @@ import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
 import edu.isen.persistance.CSVWriter;
 import org.apache.log4j.Logger;
-import java.io.FileNotFoundException;
 
 public class Controller {
 
@@ -16,10 +15,6 @@ public class Controller {
 
     public void setFft(FFT fft) {
         this.fft = fft;
-    }
-
-    public Fenetre getFen() {
-        return fen;
     }
 
     public void setFen(Fenetre fen) {

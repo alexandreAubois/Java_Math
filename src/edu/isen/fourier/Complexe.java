@@ -24,10 +24,8 @@ public class Complexe {
     }
 
     /**
-     *
-     * @param arg argument du nombre complexe
-     *
      *crée un nombre complexe de module unitaire et d'argument arg
+     * @param arg argument du nombre complexe
      */
     public Complexe(float arg)
     {
@@ -35,6 +33,11 @@ public class Complexe {
         Im= (float) Math.sin(arg);
     }
 
+    /**
+     * Créer un nombre complexe à partir d'une chaine au format "PARTIEREEL + i PARTIEIMAGINAIRE"
+     * @param nb
+     * @throws IllegalArgumentException
+     */
     public Complexe(String nb) throws IllegalArgumentException
     {
         String delimiteur ="[ ]+[+][ ]+[i] ";
@@ -54,37 +57,73 @@ public class Complexe {
         }
 
     }
+
+    /**
+     * Obtient la partie imaginaire d'un nombre complexe
+     * @return
+     */
     public float getIm() {
         return Im;
     }
 
+    /**
+     * Initialise la partie imaginaire d'un nombre complexe
+     * @param im
+     */
     public void setIm(float im) {
         Im = im;
     }
 
+    /**
+     * Obtient la partie réel d'un nombre complexe
+     * @return
+     */
     public float getRe() {
         return Re;
     }
 
+    /**
+     * Initialise la partie réel d'un nombre complexe
+     * @param re
+     */
     public void setRe(float re) {
         Re = re;
     }
 
+    /**
+     * Addtionne deux nombres complexe, et retourne un nouveau nombre complexe
+     * @param nb
+     * @return resu
+     */
     public Complexe add(Complexe nb)
     {
         return new Complexe(this.getRe()+nb.getRe(),this.getIm()+nb.getIm());
     }
 
+    /**
+     * soustrait deux nombres complexe, et retourne un nouveau nombre complexe
+     * @param nb
+     * @return resu
+     */
     public Complexe sub(Complexe nb)
     {
         return new Complexe(this.getRe()-nb.getRe(),this.getIm()-nb.getIm());
     }
 
+    /**
+     * Multiplie deux nombres complexe, et retourne un nouveau nombre complexe
+     * @param nb
+     * @return resu
+     */
     public Complexe multiply(Complexe nb)
     {
         return  new Complexe(this.getRe()*nb.getRe()-this.getIm()*nb.getIm(),this.getRe()*nb.getIm()+nb.getRe()*this.getIm());
     }
 
+    /**
+     * Transforme l'objet en chaine de caractère
+     * @return
+     */
     @Override
     public String toString() {
         DecimalFormat df=new DecimalFormat();
@@ -95,6 +134,12 @@ public class Complexe {
         return df.format(Re)+" + i "+df.format(Im);
     }
 
+    /**
+     * Test l'égalité entre deux nombres complexes
+     * Retourne un bolleen
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,13 +149,8 @@ public class Complexe {
                 Float.compare(complexe.getRe(), getRe()) == 0;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIm(), getRe());
-    }
-
     /**
-     *retourne le complexe conjugué
+     *  le complexe conjugué
      * @return le complexe conjugue
      */
     public Complexe Conjugue()
@@ -118,6 +158,10 @@ public class Complexe {
         return new Complexe(this.getRe(),-this.getIm());
     }
 
+    /**
+     * Obtient le module d'un nombre complexe
+     * @return
+     */
     public float getModule()
     {
         return (float) Math.sqrt(this.Re*this.Re+this.Im*this.Im);

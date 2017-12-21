@@ -9,7 +9,12 @@ public class FFT extends Observable{
     private Complexe valeurs[];
     private static final Logger log= Logger.getLogger(Complexe.class);
 
-
+    /**
+     * Constructeur permettant de créer un objet "Complexe" en fonction de la taille passer en paramètre
+     * @param size
+     * @throws IllegalArgumentException
+     *
+     */
     public FFT(int size) throws IllegalArgumentException {
         if(size<0)
         {
@@ -21,6 +26,11 @@ public class FFT extends Observable{
         }
     }
 
+    /**
+     * Initialise la taille
+     * @param size
+     * @throws IllegalArgumentException
+     */
     public void setSize(int size) throws IllegalArgumentException
     {
         if(Integer.bitCount(size)!=1)
@@ -34,6 +44,10 @@ public class FFT extends Observable{
 
     }
 
+    /**
+     * Calcul la fft de nombres réels
+     * @param entree
+     */
     public void calculeFFTReelle(float entree[])
     {
         if(entree.length==1)
@@ -66,10 +80,19 @@ public class FFT extends Observable{
         this.notifyObservers();
     }
 
+    /**
+     * Obtient le nombre complexe en fonction de l'indice passé en paramètre dans le tableau de valeur
+     * @param n
+     * @return
+     */
     public Complexe getValeursN(int n) {
         return valeurs[n];
     }
 
+    /**
+     * Calcul la fft de nombres complexes
+     * @param entree
+     */
     public void calculeFFTComplexe(Complexe entree[])
     {
         if(entree.length==1)
@@ -102,6 +125,10 @@ public class FFT extends Observable{
         this.notifyObservers();
     }
 
+    /**
+     * Calcul la fft inverse de nombres complexes
+     * @param entree
+     */
     public void inverseFFT(Complexe entree[])
     {
         for(int i=0;i<entree.length;i++)
@@ -117,10 +144,17 @@ public class FFT extends Observable{
         this.notifyObservers();
     }
 
+    /**
+     * Obtient le tableau de complexe
+     * @return
+     */
     public Complexe[] getValeurs() {
         return valeurs;
     }
 
+    /**
+     * Notifie les oberseveurs
+     */
     @Override
     public void notifyObservers() {
         setChanged(); // Set the changed flag to true, otherwise observers won't be notified.

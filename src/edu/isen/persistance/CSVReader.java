@@ -44,35 +44,39 @@ public class CSVReader{
         return res;
     }
 
-    public static float[] parseReelCSV(String nom) throws IllegalArgumentException,FileNotFoundException
+    public static float[] parseReelCSV(String nom) throws IllegalArgumentException
     {
         BufferedReader br;
         String ch;
         String tab[];
         List<Float> ListFloat= new ArrayList<>();
-        br=new BufferedReader(new FileReader(nom));
         try {
+            br=new BufferedReader(new FileReader(nom));
             while ((ch = br.readLine()) != null)
             {
                 tab=ch.split(",");
                 ListFloat.add(Float.parseFloat(tab[0]));
             }
+            float res[];
+            if(Integer.bitCount(ListFloat.size())==1)
+            {
+                res = new float[ListFloat.size()];
+                for (int i = 0; i < ListFloat.size(); i++) {
+                    res[i]=ListFloat.get(i);
+                }
+            }else {
+                log.warn("La taille n'est pas une puissance de 2 :"+ListFloat.size());
+                throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
+            }
+            return res;
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        float res[];
-        if(Integer.bitCount(ListFloat.size())==1)
+        }catch (NullPointerException e)
         {
-            res = new float[ListFloat.size()];
-            for (int i = 0; i < ListFloat.size(); i++) {
-                res[i]=ListFloat.get(i);
-            }
-        }else {
-            log.warn("La taille n'est pas une puissance de 2 :"+ListFloat.size());
-            throw new IllegalArgumentException("la taille des donnée n'est pas une puissance de deux");
+            log.warn("Pas de fichier trouvé " +e);
+            throw new IllegalArgumentException("Pas de fichier trouvé");
         }
 
-        return res;
+        return null;
     }
 }

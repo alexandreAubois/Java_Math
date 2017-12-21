@@ -104,8 +104,17 @@ public class ComplexeTest {
         try{
             new Complexe("14 + i j4");
             fail("NumberFormatExecption expected");
-        }catch (NumberFormatException ignored){
+        }catch (IllegalArgumentException ignored){
 
+        }
+
+        try {
+            Complexe b=new Complexe("1");
+            assertEquals(1,b.getRe(),0);
+            assertEquals(0,b.getIm(),0);
+        }catch (NumberFormatException e)
+        {
+            fail(e.getMessage());
         }
     }
 }

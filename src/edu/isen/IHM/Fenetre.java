@@ -7,6 +7,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -25,8 +27,6 @@ public class Fenetre extends JFrame implements Observer{
     private Controller controller;
     private ChartPanel cp;
     private JFrame message = new JFrame("Message d'erreur");
-    //private JPanel container = new JPanel();
-
     private String nomFichier;
     private int choixActuel;
 
@@ -34,7 +34,6 @@ public class Fenetre extends JFrame implements Observer{
     public Fenetre(Controller controllerP){
 
         this.setTitle("Projet Java-Math");
-        this.setSize(300, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.controller=controllerP;
@@ -112,7 +111,6 @@ public class Fenetre extends JFrame implements Observer{
         panF.add(saveAs);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
-
         this.getContentPane().add(panF);
         this.setSize(new Dimension(400,400));
         this.setVisible(true);
@@ -122,21 +120,25 @@ public class Fenetre extends JFrame implements Observer{
     public void update(Observable o, Object arg) {
         if(o instanceof FFT) {
             FFT fft=(FFT)o;
-            XYSeries Goals = new XYSeries("Transformée de Fourier");
+            XYSeries fourier = new XYSeries("Transformée de Fourier");
             for (int i = 0; i<fft.getValeurs().length;i++)
             {
-                Goals.add(i,fft.getValeursN(i).getModule());
+                fourier.add(i,fft.getValeursN(i).getModule());
             }
-            XYDataset xyDataset = new XYSeriesCollection(Goals);
+            XYDataset xyDataset = new XYSeriesCollection(fourier);
             JFreeChart chart = ChartFactory.createXYLineChart(
-                    "Goals Scored Over Time", "N", "Magnitude",
+                    "Transformée de Fourier", "N", "Magnitude",
                     xyDataset, PlotOrientation.VERTICAL, true, false, false);
+
+            XYPlot plot=chart.getXYPlot();
+            XYLineAndShapeRenderer renderer=new XYLineAndShapeRenderer(false,true);
+            plot.setRenderer(renderer);
             this.cp.setChart(chart);
         }
 
     }
     public void createPopUp(String message_error){
-        log.info("ici");
+        log.warn(message_error);
         JOptionPane.showMessageDialog(message, message_error);
     }
 }

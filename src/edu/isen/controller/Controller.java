@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 
 public class Controller {
 
-    private static final Logger log= Logger.getLogger(Complexe.class);
+    private static final Logger log= Logger.getLogger(Controller.class);
     private FFT fft;
     private Fenetre fen;
 
@@ -58,7 +58,7 @@ public class Controller {
                     log.warn("Choix d'action invalide");
                     break;
             }
-        }catch (FileNotFoundException|NullPointerException|IllegalArgumentException e) {
+        }catch (FileNotFoundException|IllegalArgumentException|NullPointerException e) {
             fen.createPopUp(e.toString());
         }
     }

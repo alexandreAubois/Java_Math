@@ -24,7 +24,7 @@ public class CSVReaderTest {
     public void parseReelCSV() {
         try {
             CSVReader.parseReelCSV("CSV/reel.csv");
-        } catch (FileNotFoundException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             fail("fichier pas trouve");
         }
@@ -36,7 +36,7 @@ public class CSVReaderTest {
         try {
             CSVReader.parseReelCSV("CSV/error.csv");
             fail("IllegalArgumentException");
-        } catch (FileNotFoundException|IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertTrue(true);
         }
     }

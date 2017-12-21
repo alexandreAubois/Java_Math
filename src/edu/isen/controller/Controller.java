@@ -1,20 +1,21 @@
 package edu.isen.controller;
 
+import edu.isen.IHM.Fenetre;
 import edu.isen.fourier.Complexe;
 import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
+import edu.isen.persistance.CSVWriter;
 import org.apache.log4j.Logger;
-
 import java.io.FileNotFoundException;
 
 public class Controller {
 
     private static final Logger log= Logger.getLogger(Complexe.class);
     private FFT fft;
+    private Fenetre fen;
 
     public void setFft(FFT fft) {
         this.fft = fft;
-        System.out.println(fft);
     }
 
     public Controller(FFT model){
@@ -41,6 +42,9 @@ public class Controller {
                     valC=CSVReader.parseComplexeCSV(nomFichier);
                     this.fft.setSize(valC.length);
                     this.fft.inverseFFT(valC);
+                    break;
+                case 3:
+                    CSVWriter.writeCSV(fft.getValeurs(),nomFichier);
                     break;
                 default:
                     log.warn("Choix d'action invalide");

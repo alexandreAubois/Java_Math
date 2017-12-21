@@ -35,12 +35,15 @@ public class Fenetre extends JFrame implements Observer{
 
     JButton Pan1 = new JButton("Lancer");
     JButton Pan2 = new JButton("Ouvrir");
+    JButton saveAs= new JButton("Sauvegarder sous");
 
 
     JFileChooser chooser = new JFileChooser();
 
     private String nomFichier;
+    private String nomFichierSauvegarde;
     private int choixActuel;
+
 
     public Fenetre(Controller controllerP){
 
@@ -69,7 +72,17 @@ public class Fenetre extends JFrame implements Observer{
                 this.nomFichier= choix.getSelectedFile().getAbsolutePath();
             }
         });
-
+        saveAs.addActionListener(e ->{
+            JFileChooser choix = new JFileChooser();
+            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
+            choix.addChoosableFileFilter(myFile);
+            choix.setAcceptAllFileFilterUsed(false);
+            int retour = choix.showSaveDialog(new Component() {
+            });
+            if(retour == JFileChooser.APPROVE_OPTION){
+                this.controller.notifyAction(choix.getSelectedFile().getAbsolutePath(),3);
+            }
+        });
         //CheckBox
         JPanel top = new JPanel();
         monGroupe.add(FFTR);
@@ -101,6 +114,7 @@ public class Fenetre extends JFrame implements Observer{
         };
         cp.setMouseWheelEnabled(true);
         PanF.add(cp);
+        PanF.add(saveAs);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
 

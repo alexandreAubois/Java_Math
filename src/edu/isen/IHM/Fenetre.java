@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -50,22 +51,23 @@ public class Fenetre extends JFrame implements Observer{
         JButton pan2 = new JButton("Ouvrir");
         pan2.addActionListener(e -> {
             JFileChooser choix = new JFileChooser();
-            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
+            FileNameExtensionFilter myFile = new FileNameExtensionFilter("CSV", "csv");
             choix.addChoosableFileFilter(myFile);
             choix.setAcceptAllFileFilterUsed(false);
+            choix.setCurrentDirectory(new File(System.getProperty("user.dir")));
             int retour = choix.showOpenDialog(new Component() {
             });
             if(retour == JFileChooser.APPROVE_OPTION){
                 this.nomFichier= choix.getSelectedFile().getAbsolutePath();
             }
-            //this.createPopUp("hello");
         });
         JButton saveAs = new JButton("Sauvegarder sous");
         saveAs.addActionListener(e ->{
             JFileChooser choix = new JFileChooser();
-            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
+            FileNameExtensionFilter myFile = new FileNameExtensionFilter("CSV", "csv");
             choix.addChoosableFileFilter(myFile);
             choix.setAcceptAllFileFilterUsed(false);
+            choix.setCurrentDirectory(new File(System.getProperty("user.dir")));
             int retour = choix.showSaveDialog(new Component() {
             });
             if(retour == JFileChooser.APPROVE_OPTION){
@@ -100,7 +102,6 @@ public class Fenetre extends JFrame implements Observer{
                 "Analyse Spectrale", "N", "Magnitude",
                 null, PlotOrientation.VERTICAL, true, true,false);
         cp= new ChartPanel(chart) {
-
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(320, 240);
@@ -113,12 +114,14 @@ public class Fenetre extends JFrame implements Observer{
         pack();
         this.getContentPane().add(panF);
         this.setSize(new Dimension(400,400));
+        log.info("afficage de la fenetre");
         this.setVisible(true);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if(o instanceof FFT) {
+            log.info("update du graphique");
             FFT fft=(FFT)o;
             XYSeries fourier = new XYSeries("Transformée de Fourier");
             for (int i = 0; i<fft.getValeurs().length;i++)

@@ -1,6 +1,5 @@
 package edu.isen.persistance;
 
-import edu.isen.controller.Controller;
 import edu.isen.fourier.Complexe;
 import org.apache.log4j.Logger;
 
@@ -18,7 +17,7 @@ public class CSVWriter {
      * @param tab tableau de complexe à ecrire dans un fichier
      * @param nomFichier chemin absolue ou ecrire le fichier
      */
-    public static void writeCSV(Complexe tab[],String nomFichier)
+    public static void writeCSV(Complexe tab[],String nomFichier) throws IllegalArgumentException
     {
         try {
             File f=new File(nomFichier);
@@ -34,6 +33,7 @@ public class CSVWriter {
         }catch (NullPointerException e)
         {
             log.warn("Pas de fichier trouvé"+e.getMessage());
+            throw new IllegalArgumentException("Impossible de créer le fichier");
         }
 
     }

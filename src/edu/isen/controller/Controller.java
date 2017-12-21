@@ -58,7 +58,7 @@ public class Controller {
                     log.warn("Choix d'action invalide");
                     break;
             }
-        }catch (FileNotFoundException|IllegalArgumentException|NullPointerException e) {
+        }catch (IllegalArgumentException|NullPointerException e) {
             fen.createPopUp(e.toString());
         }
     }

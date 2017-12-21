@@ -11,22 +11,29 @@ public class CSVReader{
 
     private static final Logger log= Logger.getLogger(CSVReader.class);
 
-    public static Complexe[] parseComplexeCSV(String nom) throws IllegalArgumentException,FileNotFoundException
+    /**
+     * Crée un tableau de complexe à partir d'un fichier CSV
+     * @param nom chemin complet du fichier à traiter
+     * @return tableau de complexe  contenant les données du fichier
+     * @throws IllegalArgumentException si le fichier n'est pas trouvé
+     * @throws IllegalArgumentException si la taille des données n'est pas une puissance de deux
+     *
+     * Format des complexes dans le CSV : Re + i Im
+     */
+    public static Complexe[] parseComplexeCSV(String nom) throws IllegalArgumentException
     {
+        try
+        {
         BufferedReader br;
         String ch;
         String tab[];
         List<Complexe> ListComplexe= new ArrayList<>();
         br=new BufferedReader(new FileReader(nom));
-        try {
             while ((ch = br.readLine()) != null)
             {
                 tab=ch.split(",");
                ListComplexe.add(new Complexe(tab[0]));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         Complexe res[];
@@ -42,8 +49,24 @@ public class CSVReader{
         }
 
         return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e)
+        {
+            log.warn("Pas de fichier trouvé " +e);
+            throw new IllegalArgumentException("Pas de fichier trouvé");
+        }
+
+        return null;
     }
 
+    /**
+     * Crée un tableau de flottant à partir d'un fichier CSV
+     * @param nom chemin complet du fichier à traiter
+     * @return Tableau de Float contenant les données
+     * @throws IllegalArgumentException Si le fichier n'est pas accessible
+     * @throws IllegalArgumentException Si les données ne sont pas au bon format ( taille qui n'est pas un puissance de 2, données qui ne sont pas des flottant, separateur decimale autres que le .)
+     */
     public static float[] parseReelCSV(String nom) throws IllegalArgumentException
     {
         BufferedReader br;

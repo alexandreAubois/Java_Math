@@ -14,7 +14,7 @@ public class CSVReaderTest {
     public void parseComplexeCSV() {
         try {
             CSVReader.parseComplexeCSV("CSV/out.csv");
-        } catch (FileNotFoundException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             fail("fichier pas trouve");
         }

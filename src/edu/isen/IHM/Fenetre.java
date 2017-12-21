@@ -1,21 +1,35 @@
 package edu.isen.IHM;
 
+import edu.isen.controller.Controller;
+import edu.isen.fourier.FFT;
+import org.apache.log4j.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame implements Observer{
 
+    private static final Logger log= Logger.getLogger(Fenetre.class);
     private ButtonGroup monGroupe = new ButtonGroup();
     private JRadioButton FFTR = new JRadioButton("FFT Réel");
     private JRadioButton FFTC = new JRadioButton("FFT Complexe");
     private JRadioButton iFFT = new JRadioButton("iFFT");
+    private JPanel PanF = new JPanel();
+    private JFreeChart jc;
+    private Controller controller;
+    private ChartPanel cp;
 
     //private JPanel container = new JPanel();
 
@@ -25,93 +39,93 @@ public class Fenetre extends JFrame{
 
     JFileChooser chooser = new JFileChooser();
 
-    public Fenetre(){
+    private String nomFichier;
+    private int choixActuel;
+
+    public Fenetre(Controller controllerP){
 
         this.setTitle("Projet Java-Math");
         this.setSize(300, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.controller=controllerP;
+        choixActuel=0;
 
         //Bouton "Lancer"
-        Pan1.addActionListener(new StartListener());
+        Pan1.addActionListener(e -> {
+            log.info("Action à effectuer Fichier courant : "+this.nomFichier+"Choix actuel "+this.choixActuel);
+            this.controller.notifyAction(this.nomFichier,this.choixActuel);
+        });
 
         //Bouton "ouvrir
-        Pan2.addActionListener(new OpenListener());
+        Pan2.addActionListener(e -> {
+            JFileChooser choix = new JFileChooser();
+            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
+            choix.addChoosableFileFilter(myFile);
+            choix.setAcceptAllFileFilterUsed(false);
+            int retour = choix.showOpenDialog(new Component() {
+            });
+            if(retour == JFileChooser.APPROVE_OPTION){
+                this.nomFichier= choix.getSelectedFile().getAbsolutePath();
+            }
+        });
 
         //CheckBox
         JPanel top = new JPanel();
         monGroupe.add(FFTR);
-        FFTR.addActionListener(new CheckBoxListener());
+        FFTR.addActionListener(e -> this.choixActuel=0);
+        FFTR.setSelected(true);
         monGroupe.add(FFTC);
-        FFTC.addActionListener(new CheckBoxListener());
+        FFTC.addActionListener(e -> this.choixActuel=1);
         monGroupe.add(iFFT);
-        iFFT.addActionListener(new CheckBoxListener());
+        iFFT.addActionListener(e -> this.choixActuel=2);
         top.add(FFTR);
         top.add(FFTC);
         top.add(iFFT);
         //container.add(top, BorderLayout.NORTH);
 
-        JPanel PanF = new JPanel();
         PanF.setLayout(new BoxLayout(PanF, BoxLayout.PAGE_AXIS));
 
         PanF.add(Pan2);
         PanF.add(top);
         PanF.add(Pan1);
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "Analyse Spectrale", "N", "Magnitude",
+                null, PlotOrientation.VERTICAL, true, true,false);
+        cp= new ChartPanel(chart) {
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(320, 240);
+            }
+        };
+        cp.setMouseWheelEnabled(true);
+        PanF.add(cp);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        pack();
 
         this.getContentPane().add(PanF);
+        this.setSize(new Dimension(400,400));
         this.setVisible(true);
     }
-    public static void main(String[] args){
-        Fenetre fen = new Fenetre();
-    }
 
-    /**
-     * ActionListener pour la checkBox pour choisir le type de la transformer
-     */
-    class CheckBoxListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-            System.out.println("source : " + ((JRadioButton) e.getSource()).getText() + " - état : " + ((JRadioButton) e.getSource()).isSelected());
-
-        }
-    }
-
-    /**
-     * ActionListener pour le bouton start qui permet de lancer le programme
-     */
-    class StartListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-            System.out.println("Start");
-
-        }
-    }
-
-    /**
-     * ActionListener pour le bouton open qui permet d'importer un fichier csv
-     */
-    class OpenListener extends Component implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-            System.out.println("Open");
-
-            JFileChooser choix = new JFileChooser();
-            FileNameExtensionFilter myFile = new FileNameExtensionFilter("Tableau", "csv");
-            choix.addChoosableFileFilter(myFile);
-            choix.setAcceptAllFileFilterUsed(false);
-            int retour = choix.showOpenDialog(this);
-            if(retour == JFileChooser.APPROVE_OPTION){
-                String chemin =choix.getSelectedFile().getAbsolutePath();
-                Fenetre.load(chemin);
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof FFT) {
+            FFT fft=(FFT)o;
+            XYSeries Goals = new XYSeries("Transformée de Fourier");
+            for (int i = 0; i<fft.getValeurs().length;i++)
+            {
+                Goals.add(i,fft.getValeursN(i).getModule());
             }
+            XYDataset xyDataset = new XYSeriesCollection(Goals);
+            JFreeChart chart = ChartFactory.createXYLineChart(
+                    "Goals Scored Over Time", "N", "Magnitude",
+                    xyDataset, PlotOrientation.VERTICAL, true, false, false);
+            chart.
 
+            this.cp.setChart(chart);
         }
-    }
 
-    public static void load(String chemin){
-        //todo
     }
 }

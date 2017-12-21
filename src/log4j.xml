@@ -8,11 +8,15 @@
         </layout>
     </appender>
     <!-- CATEGORIES -->
+    <category name="edu.isen.persistance.CSVReader">
+        <level value="WARN"/>
+    </category>
     <category name="edu.isen.fourier.Complexe">
         <level value="WARN"/>
     </category>
     <!-- ROOT -->
     <root>
+        <level value="INFO"/>
         <appender-ref ref="stdout"/>
     </root>
 </log4j:configuration>

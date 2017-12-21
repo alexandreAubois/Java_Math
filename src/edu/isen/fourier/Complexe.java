@@ -4,6 +4,7 @@ package edu.isen.fourier;
 import org.apache.log4j.Logger;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 public class Complexe {
 
@@ -32,6 +33,21 @@ public class Complexe {
     {
         Re= (float) Math.cos(arg);
         Im= (float) Math.sin(arg);
+    }
+
+    public Complexe(String nb) throws IllegalArgumentException
+    {
+        String delimiteur ="[ ]+[+][ ]+[i] ";
+        String token[]=nb.split(delimiteur);
+        try {
+
+            this.Re=Float.parseFloat(token[0]);
+            this.Im=Float.parseFloat(token[1]);
+        }catch (ArrayIndexOutOfBoundsException|NumberFormatException e)
+        {
+            throw new IllegalArgumentException("mauvais format de la donnée"+e);
+        }
+
     }
     public float getIm() {
         return Im;
@@ -68,7 +84,10 @@ public class Complexe {
     public String toString() {
         DecimalFormat df=new DecimalFormat();
         df.setMaximumFractionDigits(3);
-        return df.format(Re)+" + "+df.format(Im)+" i";
+        DecimalFormatSymbols dfs=new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
+        return df.format(Re)+" + i "+df.format(Im);
     }
 
     @Override
@@ -92,5 +111,10 @@ public class Complexe {
     public Complexe Conjugue()
     {
         return new Complexe(this.getRe(),-this.getIm());
+    }
+
+    public float getModule()
+    {
+        return (float) Math.sqrt(this.Re*this.Re+this.Im*this.Im);
     }
 }

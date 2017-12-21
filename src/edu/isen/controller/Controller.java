@@ -6,20 +6,15 @@ import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
 import edu.isen.persistance.CSVWriter;
 import org.apache.log4j.Logger;
-import java.io.FileNotFoundException;
 
 public class Controller {
 
-    private static final Logger log= Logger.getLogger(Complexe.class);
+    private static final Logger log= Logger.getLogger(Controller.class);
     private FFT fft;
     private Fenetre fen;
 
     public void setFft(FFT fft) {
         this.fft = fft;
-    }
-
-    public Fenetre getFen() {
-        return fen;
     }
 
     public void setFen(Fenetre fen) {
@@ -58,7 +53,7 @@ public class Controller {
                     log.warn("Choix d'action invalide");
                     break;
             }
-        }catch (FileNotFoundException|NullPointerException|IllegalArgumentException e) {
+        }catch (IllegalArgumentException|NullPointerException e) {
             fen.createPopUp(e.toString());
         }
     }

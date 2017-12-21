@@ -45,10 +45,15 @@ public class Complexe {
         try {
 
             this.Re=Float.parseFloat(token[0]);
-            this.Im=Float.parseFloat(token[1]);
+            if(token.length==2)
+            {
+                this.Im=Float.parseFloat(token[1]);
+            }else {
+                this.Im=0;
+            }
         }catch (ArrayIndexOutOfBoundsException|NumberFormatException e)
         {
-            throw new IllegalArgumentException("mauvais format de la donnée"+e);
+            throw new IllegalArgumentException("mauvais format de la donnée"+System.getProperty("line.separator")+e);
         }
 
     }

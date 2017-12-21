@@ -18,6 +18,14 @@ public class Controller {
         this.fft = fft;
     }
 
+    public Fenetre getFen() {
+        return fen;
+    }
+
+    public void setFen(Fenetre fen) {
+        this.fen = fen;
+    }
+
     public Controller(FFT model){
         this.fft=model;
     }
@@ -50,8 +58,8 @@ public class Controller {
                     log.warn("Choix d'action invalide");
                     break;
             }
-        }catch (FileNotFoundException|NullPointerException e) {
-            e.printStackTrace();
+        }catch (FileNotFoundException|NullPointerException|IllegalArgumentException e) {
+            fen.createPopUp(e.toString());
         }
     }
 

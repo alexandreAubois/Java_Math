@@ -146,7 +146,7 @@ public class FFT extends Observable{
 
     /**
      * Obtient le tableau de complexe
-     * @return
+     * @return les valeurs
      */
     public Complexe[] getValeurs() {
         return valeurs;

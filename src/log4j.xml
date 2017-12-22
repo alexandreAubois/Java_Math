@@ -9,10 +9,10 @@
     </appender>
     <!-- CATEGORIES -->
     <category name="edu.isen.persistance.CSVReader">
-        <level value="INFO"/>
+        <level value="WARN"/>
     </category>
     <category name="edu.isen.fourier.Complexe">
-        <level value="INFO"/>
+        <level value="WARN"/>
     </category>
     <!-- ROOT -->
     <root>

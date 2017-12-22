@@ -6,20 +6,18 @@ import edu.isen.fourier.FFT;
 import edu.isen.persistance.CSVReader;
 import edu.isen.persistance.CSVWriter;
 import org.apache.log4j.Logger;
-import java.io.FileNotFoundException;
 
+/**
+ * classe servant de controller pour l'application
+ */
 public class Controller {
 
-    private static final Logger log= Logger.getLogger(Complexe.class);
+    private static final Logger log= Logger.getLogger(Controller.class);
     private FFT fft;
     private Fenetre fen;
 
     public void setFft(FFT fft) {
         this.fft = fft;
-    }
-
-    public Fenetre getFen() {
-        return fen;
     }
 
     public void setFen(Fenetre fen) {
@@ -30,6 +28,15 @@ public class Controller {
         this.fft=model;
     }
 
+    /**
+     * methode appelée pour notifier le controlleur de l'action choisis par l'utilisateur
+     * @param nomFichier nom du fichier à traiter
+     * @param choix action choisis
+     *              0 :lire un csv de reel et faire sa transformée de fourier
+     *              1 :lire un csv de Complex et faire sa transformée de fourier
+     *              2 :lire un csv de Complex et faire sa transformée de fourier inverse
+     *              3 : enregister le dernier resultat effectué au format CSV
+     */
     public void notifyAction(String nomFichier,int choix)
     {
         try {
@@ -58,7 +65,7 @@ public class Controller {
                     log.warn("Choix d'action invalide");
                     break;
             }
-        }catch (FileNotFoundException|NullPointerException|IllegalArgumentException e) {
+        }catch (IllegalArgumentException|NullPointerException e) {
             fen.createPopUp(e.toString());
         }
     }

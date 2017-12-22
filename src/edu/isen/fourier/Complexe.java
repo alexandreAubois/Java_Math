@@ -35,8 +35,8 @@ public class Complexe {
 
     /**
      * Créer un nombre complexe à partir d'une chaine au format "PARTIEREEL + i PARTIEIMAGINAIRE"
-     * @param nb
-     * @throws IllegalArgumentException
+     * @param nb chaine representant le nombre complexe
+     * @throws IllegalArgumentException si le formatat n'est pas le bon
      */
     public Complexe(String nb) throws IllegalArgumentException
     {
@@ -45,17 +45,22 @@ public class Complexe {
         try {
 
             this.Re=Float.parseFloat(token[0]);
-            this.Im=Float.parseFloat(token[1]);
+            if(token.length==2)
+            {
+                this.Im=Float.parseFloat(token[1]);
+            }else {
+                this.Im=0;
+            }
         }catch (ArrayIndexOutOfBoundsException|NumberFormatException e)
         {
-            throw new IllegalArgumentException("mauvais format de la donnée"+e);
+            throw new IllegalArgumentException("mauvais format de la donnée"+System.getProperty("line.separator")+e);
         }
 
     }
 
     /**
      * Obtient la partie imaginaire d'un nombre complexe
-     * @return
+     * @return la partie imaginaire du nombre complexe
      */
     public float getIm() {
         return Im;
@@ -63,7 +68,7 @@ public class Complexe {
 
     /**
      * Initialise la partie imaginaire d'un nombre complexe
-     * @param im
+     * @param im partie imaginaire du flottant
      */
     public void setIm(float im) {
         Im = im;
@@ -71,7 +76,7 @@ public class Complexe {
 
     /**
      * Obtient la partie réel d'un nombre complexe
-     * @return
+     * @return la partie reel du complexe
      */
     public float getRe() {
         return Re;
@@ -79,7 +84,7 @@ public class Complexe {
 
     /**
      * Initialise la partie réel d'un nombre complexe
-     * @param re
+     * @param re partie reel du nombre complexe
      */
     public void setRe(float re) {
         Re = re;
@@ -87,8 +92,8 @@ public class Complexe {
 
     /**
      * Addtionne deux nombres complexe, et retourne un nouveau nombre complexe
-     * @param nb
-     * @return resu
+     * @param nb nombre à ajouté à l'instance actuelle
+     * @return resu une nouvelle instance de complexe sommant l'instance actuelle avec NB
      */
     public Complexe add(Complexe nb)
     {
@@ -97,8 +102,8 @@ public class Complexe {
 
     /**
      * soustrait deux nombres complexe, et retourne un nouveau nombre complexe
-     * @param nb
-     * @return resu
+     * @param nb Complexe à soustraire à l'instance actuelle
+     * @return resu nouvelle instance d'un nombre complexe valant this-nb
      */
     public Complexe sub(Complexe nb)
     {
@@ -107,8 +112,8 @@ public class Complexe {
 
     /**
      * Multiplie deux nombres complexe, et retourne un nouveau nombre complexe
-     * @param nb
-     * @return resu
+     * @param nb Complexe à multiplier à l'instance actuel
+     * @return resu nouvel instance d'un nombre complexe valant this * nb
      */
     public Complexe multiply(Complexe nb)
     {
@@ -117,7 +122,7 @@ public class Complexe {
 
     /**
      * Transforme l'objet en chaine de caractère
-     * @return
+     * @return une forme lisible de l'objet Re + i +Im
      */
     @Override
     public String toString() {
@@ -132,8 +137,8 @@ public class Complexe {
     /**
      * Test l'égalité entre deux nombres complexes
      * Retourne un bolleen
-     * @param o
-     * @return
+     * @param o objet à comparer
+     * @return true si les deux objet ont leur partie imaginaire égale et leur partie réel égale
      */
     @Override
     public boolean equals(Object o) {
@@ -155,7 +160,7 @@ public class Complexe {
 
     /**
      * Obtient le module d'un nombre complexe
-     * @return
+     * @return Module du nombre complexe (sqrt(Re*Re+Im*Im)
      */
     public float getModule()
     {

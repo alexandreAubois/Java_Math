@@ -62,6 +62,10 @@ public class FFTTest {
     public void calculeFFTReelleDirac() {
         float valeurDirac[]=new float[8];
         valeurDirac[0]=1;
+        for(int i=1;i<valeurDirac.length;i++)
+        {
+            valeurDirac[i]= 0;
+        }
         FFT dirac=new FFT(3);
         dirac.calculeFFTReelle(valeurDirac);
         for(int i=0;i<valeurDirac.length;i++)

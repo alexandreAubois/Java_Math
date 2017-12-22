@@ -131,7 +131,13 @@ public class Complexe {
         DecimalFormatSymbols dfs=new DecimalFormatSymbols();
         dfs.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(dfs);
-        return df.format(Re)+" + i "+df.format(Im);
+        if(Im!=0)
+        {
+            return df.format(Re)+" + i "+df.format(Im);
+        }else{
+            return df.format(Re);
+        }
+
     }
 
     /**
